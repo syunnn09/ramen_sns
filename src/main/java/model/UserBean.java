@@ -3,12 +3,12 @@ package model;
 import java.io.Serializable;
 
 public class UserBean implements Serializable {
-	private int userId;
+	private int userId, prefecture;
 	private String userName, password, email, createdAt, imagePath, bio;
 
 	public UserBean() { }
 
-	public UserBean(int userId, String userName, String password, String email, String createdAt, String imagePath, String bio) {
+	public UserBean(int userId, String userName, String password, String email, String createdAt, String imagePath, String bio, int prefecture) {
 		this.setUserId(userId);
 		this.setUserName(userName);
 		this.setPassword(password);
@@ -16,15 +16,16 @@ public class UserBean implements Serializable {
 		this.setCreatedAt(createdAt);
 		this.setImagePath(imagePath);
 		this.setBio(bio);
+		this.setPrefecture(prefecture);
 	}
 
-	public UserBean(String userName, String password, String email, String createdAt, String imagePath, String bio) {
+	public UserBean(String userName, String password, String email, String imagePath, String bio, int prefecture) {
 		this.setUserName(userName);
 		this.setPassword(password);
 		this.setEmail(email);
-		this.setCreatedAt(createdAt);
 		this.setImagePath(imagePath);
 		this.setBio(bio);
+		this.setPrefecture(prefecture);
 	}
 
 	public int getUserId() {
@@ -81,6 +82,14 @@ public class UserBean implements Serializable {
 
 	public void setBio(String bio) {
 		this.bio = bio;
+	}
+
+	public int getPrefecture() {
+		return prefecture;
+	}
+
+	public void setPrefecture(int prefecture) {
+		this.prefecture = prefecture;
 	}
 
 	

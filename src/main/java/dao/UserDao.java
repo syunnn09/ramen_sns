@@ -17,7 +17,7 @@ public class UserDao extends CommonDao {
 		List<UserBean> users = new ArrayList<UserBean>();
 
 		try (Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
-			String sql = "SELECT * FROM user";
+			String sql = "SELECT * FROM users";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 
@@ -29,8 +29,9 @@ public class UserDao extends CommonDao {
 				String createdAt = rs.getString("createdAt");
 				String imagePath = rs.getString("imagePath");
 				String bio = rs.getString("bio");
+				int prefecture = rs.getInt("prefecture");
 
-				UserBean user = new UserBean(userId, userName, password, email, createdAt, imagePath, bio);
+				UserBean user = new UserBean(userId, userName, password, email, createdAt, imagePath, bio, prefecture);
 				users.add(user);
 			}
 		} catch (SQLException e) {
@@ -48,7 +49,7 @@ public class UserDao extends CommonDao {
 			DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			String now = dtf1.format(nowDate);
 
-			String sql = "INSERT INTO user(userName, password, email, createdAt, imagePath, bio) VALUES(?, ?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO users(userName, password, email, createdAt, imagePath, bio, prefecture) VALUES(?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, user.getUserName());
 			ps.setString(2, user.getPassword());
@@ -56,10 +57,12 @@ public class UserDao extends CommonDao {
 			ps.setString(4, now);
 			ps.setString(5, user.getImagePath());
 			ps.setString(6, user.getBio());
+			ps.setInt(7, user.getPrefecture());
 
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
 
 		return true;
@@ -83,7 +86,7 @@ public class UserDao extends CommonDao {
 		if (!this.isExistsUser(id)) return;
 
 		try (Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
-			String sql = "DELETE FROM user WHERE userId = ?;";
+			String sql = "DELETE FROM users WHERE userId = ?;";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, id);
 
