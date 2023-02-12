@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.UserDao;
 import definition.Const;
+import model.UserBean;
 
 /**
  * Servlet implementation class CreateUserServlet
@@ -31,7 +33,19 @@ public class CreateUserServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		String userName = request.getParameter("userName");
+		int prefecture = Integer.parseInt(request.getParameter("prefecture"));
+		String imagePath = "";
+		String bio = "";
+
+		UserBean user = new UserBean(userName, password, email, imagePath, bio, prefecture);
+		UserDao userDao = new UserDao();
+		boolean isCreatedUser = userDao.insert(user);
+		System.out.println(isCreatedUser);
+
+		response.sendRedirect("mypage");
 	}
 
 }
