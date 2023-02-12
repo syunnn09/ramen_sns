@@ -14,4 +14,15 @@ public class Const {
 		"徳島県","香川県","愛媛県","高知県","福岡県","佐賀県","長崎県",
 		"熊本県","大分県","宮崎県","鹿児島県","沖縄県"
 	};
+
+	public static enum USERS {
+		/** @type {int} */		userId,
+		/** @type {String} */	userName,
+		/** @type {String} */	password,
+		/** @type {String} */	email,
+		/** @type {Date} */		createdAt,
+		/** @type {String} */	imagePath,
+		/** @type {String} */	bio,
+		/** @type {int} */		prefecture
+	}
 }
