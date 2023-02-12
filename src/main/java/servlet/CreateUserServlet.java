@@ -9,19 +9,29 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import definition.Const;
+
 /**
- * Servlet implementation class SampleServlet
+ * Servlet implementation class CreateUserServlet
  */
-@WebServlet("/sample")
-public class SampleServlet extends HttpServlet {
+@WebServlet("/createUser")
+public class CreateUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/sample.html");
+		request.setAttribute("prefs", Const.prefs);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/createNewUser.jsp");
 		dispatcher.forward(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 	}
 
 }
