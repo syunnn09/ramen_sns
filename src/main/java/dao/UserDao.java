@@ -82,6 +82,35 @@ public class UserDao extends CommonDao {
 		return this.findUser(userId) != null;
 	}
 
+	public UserBean login(String email, String password) {
+		try (Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
+			String sql = "SELECT password FROM users WHERE email = ? AND password = ?;";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, email);
+			ps.setString(2, password);
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				int userId = rs.getInt("userId");
+				String userName = rs.getString("userName");
+				String userPassword = rs.getString("password");
+				String userEmail = rs.getString("email");
+				String createdAt = rs.getString("createdAt");
+				String imagePath = rs.getString("imagePath");
+				String bio = rs.getString("bio");
+				int prefecture = rs.getInt("prefecture");
+
+				UserBean user = new UserBean(userId, userName, userPassword, userEmail, createdAt, imagePath, bio, prefecture);
+				return user;
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public void delete(int id) {
 		if (!this.isExistsUser(id)) return;
 
